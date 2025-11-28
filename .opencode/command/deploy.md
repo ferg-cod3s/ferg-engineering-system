@@ -1,7 +1,13 @@
----
-description: "Pre-deployment checklist for Coolify"
-agent: build
-subtask: true
----
+| description | agent | subtask |
+|---|---|---|
+| Pre-deployment checklist for Coolify | build | true |
 
-Run pre-deployment verification and give Coolify deployment instructions and post-deploy checks.
+Run pre-deployment verification:
+- Tests pass
+- Type checks pass
+- Linting passes
+- Build succeeds
+- Environment variables configured
+- Migrations ready
+
+Provide Coolify deployment instructions and post-deploy verification steps.
