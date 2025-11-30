@@ -11,6 +11,7 @@ permissions:
 
 jobs:
   check-and-publish:
+    environment: production  # Optional: Add production environment protection
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -48,7 +49,8 @@ jobs:
 
       - name: Publish to NPM
         if: steps.version-check.outputs.should_publish == 'true'
-        run: npm publish --provenance
+        run: npm publish
+        # Provenance is automatic with OIDC - no --provenance flag needed
 
       - name: Create tag and release
         if: steps.version-check.outputs.should_publish == 'true'

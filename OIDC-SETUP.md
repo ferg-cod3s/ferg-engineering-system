@@ -36,6 +36,9 @@ Configure these settings:
 **Environment**: (optional) `production` (if using environments)
 **Branch Pattern**: `main` or `refs/tags/v*`
 
+### 1.3 Maximum Security (Recommended)
+After enabling trusted publishers, navigate to your package's **Settings → Publishing access → Select "Require two-factor authentication and disallow tokens"** for maximum security.
+
 ### 1.3 Alternative: Use Setup Script
 You can use the `setup-npm-trusted-publish` action:
 
@@ -99,17 +102,16 @@ jobs:
         run: npm version ${{ github.event.inputs.version }} --no-git-tag-version
 
       - name: Publish to NPM
-        run: npm publish --provenance
+        run: npm publish
         # No token needed - OIDC handles authentication automatically
+        # Provenance is automatic with OIDC - no --provenance flag needed
 
       - name: Create GitHub Release
         if: startsWith(github.ref, 'refs/tags/')
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
-          release_name: Release ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
           draft: false
           prerelease: false
 ```
@@ -168,7 +170,8 @@ jobs:
 
       - name: Publish to NPM
         if: steps.version-check.outputs.should_publish == 'true'
-        run: npm publish --provenance
+        run: npm publish
+        # Provenance is automatic with OIDC - no --provenance flag needed
 
       - name: Create tag and release
         if: steps.version-check.outputs.should_publish == 'true'
