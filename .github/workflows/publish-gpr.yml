@@ -39,8 +39,13 @@ jobs:
       - name: Run tests (if available)
         run: npm test --if-present
 
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
       - name: Build package
-        run: npm run build
+        run: bun run build
 
       - name: Update version (if workflow_dispatch)
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.version != ''
