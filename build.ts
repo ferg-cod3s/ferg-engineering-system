@@ -127,33 +127,28 @@ async function getMarkdownFiles(dir: string): Promise<string[]> {
 }
 
 /**
- * Build Claude Code output
+ * Build Claude Code agents
  */
-async function buildClaude(): Promise<void> {
-  console.log("📦 Building Claude Code plugin...")
-
-  const commandsDir = join(CLAUDE_DIR, "commands")
-  await mkdir(commandsDir, { recursive: true })
-
-  // Build plugin.json
-  const commandFiles = await getMarkdownFiles(join(CONTENT_DIR, "commands"))
-  const commandPaths = commandFiles.map(f => 
-    `./commands/${basename(f)}`
-  )
-
-  const pluginJson = {
-    name: "ferg-engineering",
-    version: "2.0.0",
-    description: "Compounding engineering system for Claude Code & OpenCode. Shared agents, commands, and skills.",
-    author: {
-      name: "ferg-cod3s",
-      email: "contact@ferg-cod3s.dev"
-    },
-    repository: "https://github.com/ferg-cod3s/ferg-engineering-system",
-    license: "MIT",
-    keywords: ["engineering", "workflow", "agents", "review", "planning", "deployment"],
-    commands: commandPaths
+async function buildClaudeAgents(): Promise<void> {
+  const agentsDir = join(CLAUDE_DIR, "agents")
+  await mkdir(agentsDir, { recursive: true })
+  
+  const agentFiles = await getMarkdownFiles(join(CONTENT_DIR, "agents"))
+  for (const file of agentFiles) {
+    await copyFile(file, join(agentsDir, basename(file)))
   }
+}
+
+/**
+ * Build Claude Code skills
+ */
+async function buildClaudeSkills(): Promise<void> {
+  const skillsDir = join(CLAUDE_DIR, "skills")
+  await mkdir(skillsDir, { recursive: true })
+  
+  // Copy skills to dist/.claude-plugin/skills/
+  await copyRecursive(SKILLS_DIR, join(CLAUDE_DIR, "skills"))
+}
 
   await writeFile(
     join(CLAUDE_DIR, "plugin.json"),
@@ -189,6 +184,7 @@ async function buildClaude(): Promise<void> {
     await writeFile(dest, content)
   }
 
+  }
   console.log(`   ✓ ${commandFiles.length} commands`)
   console.log(`   ✓ plugin.json`)
 }
