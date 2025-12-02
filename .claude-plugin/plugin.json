@@ -1,11 +1,12 @@
 {
   "name": "ferg-engineering",
-  "version": "2.0.0",
+  "version": "0.1.1",
   "description": "Compounding engineering system for Claude Code & OpenCode. Shared agents, commands, and skills.",
   "author": {
     "name": "ferg-cod3s",
     "email": "contact@ferg-cod3s.dev"
   },
+  "homepage": "https://github.com/ferg-cod3s/ferg-engineering-system#readme",
   "repository": "https://github.com/ferg-cod3s/ferg-engineering-system",
   "license": "MIT",
   "keywords": [
@@ -14,17 +15,9 @@
     "agents",
     "review",
     "planning",
-    "deployment"
-  ],
-  "commands": [
-    "./commands/plan.md",
-    "./commands/work.md",
-    "./commands/review.md",
-    "./commands/seo.md",
-    "./commands/research.md",
-    "./commands/compound.md",
-    "./commands/deploy.md",
-    "./commands/optimize.md",
-    "./commands/recursive-init.md"
+    "deployment",
+    "seo",
+    "optimization",
+    "research"
   ]
 }

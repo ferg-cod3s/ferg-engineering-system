@@ -2,12 +2,6 @@
 |---|---|
 | Execute a plan or task with systematic tracking | build |
 
----
-name: work
-description: Execute a plan or task with systematic tracking
-agent: build
----
-
 # Work Command
 
 Execute a plan or task with systematic tracking and quality gates.

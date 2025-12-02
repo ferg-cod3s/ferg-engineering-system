@@ -26,9 +26,9 @@ cd ferg-engineering-system
 ./setup-global.sh  # Installs to ~/.config/opencode with ferg/ namespace
 ```
 
-**Option 2: npm Package** (Coming Soon)
+**Option 2: Bun Package** (Coming Soon)
 ```bash
-npm install -g @ferg-cod3s/engineering-system
+bun install -g @ferg-cod3s/engineering-system
 ```
 
 ### For OpenCode (Project-Local)
@@ -45,7 +45,7 @@ cd ferg-engineering-system
 | Platform | Installation | Commands | Agents | Example Usage |
 |----------|-------------|----------|--------|---------------|
 | **Claude Code** | `/plugin marketplace add ferg-cod3s/ferg-marketplace`<br>`/plugin install ferg-engineering@ferg-cod3s` | `/plan`, `/review`, `/optimize`, `/seo`, `/deploy`, `/compound`, `/recursive-init`, `/work`, `/create-plugin`, `/create-agent`, `/create-command`, `/create-skill` | N/A | `/plan "Add user authentication"` or `/create-plugin "database migration tool"` |
-| **OpenCode** | `npm install -g @ferg-cod3s/engineering-system` | `/ferg/plan`, `/ferg/review`, `/ferg/optimize`, etc., `/ferg/create-plugin`, `/ferg/create-agent`, `/ferg/create-command`, `/ferg/create-skill`, `/ferg/create-tool` | `ferg/architect-advisor`, `ferg/frontend-reviewer`, `ferg/seo-specialist`, `ferg/prompt-optimizer`, `ferg/agent-creator`, `ferg/command-creator`, `ferg/skill-creator`, `ferg/tool-creator`, `ferg/plugin-validator` | `/ferg/optimize 'Fix this slow query'` or `Use ferg/architect-advisor to evaluate...` or `/ferg/create-agent "code reviewer"` |
+| **OpenCode** | `bun install -g @ferg-cod3s/engineering-system` | `/ferg/plan`, `/ferg/review`, `/ferg/optimize`, etc., `/ferg/create-plugin`, `/ferg/create-agent`, `/ferg/create-command`, `/ferg/create-skill`, `/ferg/create-tool` | `ferg/architect-advisor`, `ferg/frontend-reviewer`, `ferg/seo-specialist`, `ferg/prompt-optimizer`, `ferg/agent-creator`, `ferg/command-creator`, `ferg/skill-creator`, `ferg/tool-creator`, `ferg/plugin-validator` | `/ferg/optimize 'Fix this slow query'` or `Use ferg/architect-advisor to evaluate...` or `/ferg/create-agent "code reviewer"` |
 
 ## Architecture (v2.0)
 

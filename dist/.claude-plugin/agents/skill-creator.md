@@ -100,11 +100,10 @@ skill-name/
 
 **Frontmatter Requirements:**
 ```yaml
----
-name: skill-name
-description: This skill should be used when the user asks to "specific trigger phrase 1", "specific trigger phrase 2", or "specific trigger phrase 3". Include concrete examples of user queries that should trigger this skill.
-version: 1.0.0
----
+# Example:
+#   name: skill-name
+#   description: This skill should be used when the user asks to...
+#   version: 1.0.0
 ```
 
 **Content Guidelines:**

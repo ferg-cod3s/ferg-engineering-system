@@ -4,9 +4,9 @@
 Build and installation utilities for the Ferg Engineering System.
 
 ## Technology Stack
-- **Runtime**: Node.js (ES modules)
-- **Language**: JavaScript
-- **Shebang**: `#!/usr/bin/env node`
+- **Runtime**: Bun (ES modules)
+- **Language**: JavaScript/TypeScript
+- **Shebang**: `#!/usr/bin/env bun`
 
 ## Build Commands
 ```bash
@@ -23,13 +23,13 @@ bun run clean
 bun run validate
 
 # Installation scripts
-node scripts/install.js --global  # Global installation
-node scripts/install.js --local    # Local installation
+bun scripts/install.js --global  # Global installation
+bun scripts/install.js --local    # Local installation
 ```
 
 ## Code Style
 - Use ES modules (`import`/`export`)
-- Follow Node.js best practices
+- Follow Bun best practices
 - Include proper shebang for executable scripts
 - Use JSDoc comments for documentation
 

@@ -79,11 +79,10 @@ export default (async ({ project, client, $, directory, worktree }) => {
 
 **Claude Code Commands (.md with YAML frontmatter):**
 ```yaml
----
-name: command-name
-description: Command description
-agent: build
----
+# Example:
+#   name: command-name
+#   description: Command description
+#   agent: build
 ```
 
 **OpenCode Commands (.md with table frontmatter):**
@@ -103,13 +102,12 @@ agent: build
 
 **Claude Code Agents (.md with YAML frontmatter):**
 ```yaml
----
-name: agent-name
-description: Agent description
-mode: subagent
-model: sonnet
-color: cyan
----
+# Example:
+#   name: agent-name
+#   description: Agent description
+#   mode: subagent
+#   model: sonnet
+#   color: cyan
 ```
 
 **OpenCode Agents (.md with table frontmatter):**
@@ -130,11 +128,10 @@ color: cyan
 
 **Both Platforms (SKILL.md format):**
 ```yaml
----
-name: skill-name
-description: This skill should be used when...
-version: 1.0.0
----
+# Example:
+#   name: skill-name
+#   description: This skill should be used when...
+#   version: 1.0.0
 ```
 
 **Validation Checks:**

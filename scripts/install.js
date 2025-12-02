@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env bun
 
 /**
  * Ferg Engineering System Installation Script
@@ -22,11 +22,11 @@ if (!isGlobal && !isLocal) {
   console.log('🔧 Ferg Engineering System Installer');
   console.log('=====================================\n');
   console.log('Usage:');
-  console.log('  npm run install:global   # Install globally to ~/.config/opencode');
-  console.log('  npm run install:local    # Install locally to .opencode/');
+  console.log('  bun run install:global   # Install globally to ~/.config/opencode');
+  console.log('  bun run install:local    # Install locally to .opencode/');
   console.log('\nOr use directly:');
-  console.log('  node scripts/install.js --global');
-  console.log('  node scripts/install.js --local');
+  console.log('  bun scripts/install.js --global');
+  console.log('  bun scripts/install.js --local');
   process.exit(1);
 }
 
@@ -37,7 +37,7 @@ function installOpenCode(targetDir, description) {
   
   if (!fs.existsSync(sourceDir)) {
     console.log('❌ Error: dist/.opencode not found.');
-    console.log('   Run "npm run build" first or install from pre-built package.');
+    console.log('   Run "bun run build" first or install from pre-built package.');
     process.exit(1);
   }
   
