@@ -20,5 +20,20 @@
     "optimization",
     "research"
   ],
-  "commands": "./commands/"
+  "commands": [
+    "./commands/plan.md",
+    "./commands/work.md",
+    "./commands/review.md",
+    "./commands/seo.md",
+    "./commands/research.md",
+    "./commands/compound.md",
+    "./commands/deploy.md",
+    "./commands/optimize.md",
+    "./commands/recursive-init.md",
+    "./commands/create-agent.md",
+    "./commands/create-command.md",
+    "./commands/create-plugin.md",
+    "./commands/create-skill.md",
+    "./commands/create-tool.md"
+  ]
 }
