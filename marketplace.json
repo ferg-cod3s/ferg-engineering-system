@@ -1,22 +1,28 @@
 {
-  "name": "Ferg Engineering Marketplace",
-  "description": "Curated collection of engineering tools, agents, and workflows by ferg-cod3s",
-  "version": "1.0.0",
-  "author": {
+  "name": "ferg-engineering-marketplace",
+  "owner": {
     "name": "ferg-cod3s",
-    "email": "contact@ferg-cod3s.dev",
-    "url": "https://github.com/ferg-cod3s"
+    "email": "contact@ferg-cod3s.dev"
   },
-  "repository": "https://github.com/ferg-cod3s/ferg-marketplace",
-  "license": "MIT",
+  "metadata": {
+    "description": "Curated collection of engineering tools, agents, and workflows by ferg-cod3s",
+    "version": "1.0.0"
+  },
   "plugins": [
     {
       "name": "ferg-engineering",
+      "source": {
+        "source": "github",
+        "repo": "ferg-cod3s/ferg-engineering-system"
+      },
       "description": "Compounding engineering system with shared agents, commands, and skills for Claude Code & OpenCode",
-      "version": "0.1.0",
-      "author": "ferg-cod3s",
-      "repository": "https://github.com/ferg-cod3s/ferg-engineering-system",
+      "version": "2.0.0",
+      "author": {
+        "name": "ferg-cod3s",
+        "email": "contact@ferg-cod3s.dev"
+      },
       "homepage": "https://github.com/ferg-cod3s/ferg-engineering-system#readme",
+      "repository": "https://github.com/ferg-cod3s/ferg-engineering-system",
       "license": "MIT",
       "keywords": [
         "engineering",
@@ -29,50 +35,7 @@
         "optimization"
       ],
       "category": "Development Tools",
-      "tags": ["productivity", "code-review", "architecture", "workflow"],
-      "sources": [
-        {
-          "type": "github",
-          "url": "https://github.com/ferg-cod3s/ferg-engineering-system"
-        }
-      ],
-      "compatibility": {
-        "claude-code": ">=1.0.0",
-        "opencode": ">=1.0.0"
-      },
-      "dependencies": {},
-      "assets": {
-        "icon": "https://github.com/ferg-cod3s.png",
-        "screenshots": [
-          "https://github.com/ferg-cod3s/ferg-engineering-system/blob/main/assets/overview.png"
-        ]
-      },
-        "changelog": {
-          "0.1.0": "Add comprehensive research skill with multi-phase agent orchestration",
-          "0.0.2": "Major refactor to single-source-of-truth architecture with build system",
-          "0.0.1": "Initial release with basic commands and agents"
-        },
-      "stats": {
-        "downloads": 0,
-        "stars": 0,
-        "last_updated": "2025-11-30"
-      }
+      "tags": ["productivity", "code-review", "architecture", "workflow"]
     }
-  ],
-  "categories": [
-    {
-      "name": "Development Tools",
-      "description": "Tools for software development, code review, and workflow automation"
-    },
-    {
-      "name": "Productivity",
-      "description": "Tools to enhance development productivity and workflow efficiency"
-    }
-  ],
-  "metadata": {
-    "created_at": "2025-11-30T16:00:00Z",
-    "updated_at": "2025-11-30T16:00:00Z",
-    "total_plugins": 1,
-    "categories": 2
-  }
+  ]
 }
