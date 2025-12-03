@@ -175,13 +175,18 @@ async function buildClaudeSkills(): Promise<void> {
 async function buildClaudePlugin(): Promise<void> {
   // Read version from package.json
   const packageJson = JSON.parse(await readFile(join(ROOT, "package.json"), "utf-8"))
-  
+
+  // Get command files first to include in plugin.json
+  const commandFiles = await getMarkdownFiles(join(CONTENT_DIR, "commands"))
+  const commands = commandFiles.map(file => `./commands/${basename(file)}`)
+
   const pluginJson = {
     name: "ferg-engineering",
     version: packageJson.version,
     description: "Compounding engineering system for Claude Code",
     author: "ferg-cod3s",
-    license: "MIT"
+    license: "MIT",
+    commands: commands
   }
 
   await writeFile(
@@ -214,8 +219,7 @@ async function buildClaudePlugin(): Promise<void> {
   // Copy commands (Claude uses YAML frontmatter format directly)
   const commandsDir = join(CLAUDE_DIR, "commands")
   await mkdir(commandsDir, { recursive: true })
-  
-  const commandFiles = await getMarkdownFiles(join(CONTENT_DIR, "commands"))
+
   for (const file of commandFiles) {
     const content = await readFile(file, "utf-8")
     const dest = join(commandsDir, basename(file))
