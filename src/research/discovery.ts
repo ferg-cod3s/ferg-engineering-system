@@ -619,3 +619,98 @@ export class PatternFinder implements DiscoveryAgent {
     return ConfidenceLevel.LOW;
   }
 }
+
+/**
+ * Discovery Handler
+ * Coordinates parallel execution of all discovery agents
+ */
+export class DiscoveryHandler {
+  private config: any;
+  private locators: DiscoveryAgent[];
+
+  constructor(config: any) {
+    this.config = config;
+    this.locators = [
+      new CodebaseLocator(config),
+      new ResearchLocator(config),
+      new PatternFinder(config)
+    ];
+  }
+
+  async discover(query: ResearchQuery): Promise<DiscoveryResult[]> {
+    const startTime = Date.now();
+    
+    try {
+      // Execute all locators in parallel
+      const results = await Promise.allSettled(
+        this.locators.map(locator => 
+          this.executeWithTimeout(locator.discover(query.query, query.scope, query.constraints))
+        )
+      );
+      
+      // Process results
+      const successfulResults = results
+        .filter(r => r.status === 'fulfilled')
+        .map(r => (r as PromiseFulfilledResult<DiscoveryResult>).value);
+      
+      const failedResults = results
+        .filter(r => r.status === 'rejected')
+        .map(r => (r as PromiseRejectedResult).reason);
+      
+      // Log failures
+      if (failedResults.length > 0) {
+        console.warn(`Some discovery agents failed:`, failedResults);
+      }
+      
+      // Deduplicate results
+      const merged = this.deduplicateResults(successfulResults);
+      
+      const executionTime = Date.now() - startTime;
+      
+      return merged;
+      
+    } catch (error) {
+      throw new Error(`Discovery handler failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  private async executeWithTimeout<T>(promise: Promise<T>, timeoutMs: number = 30000): Promise<T> {
+    return Promise.race([
+      promise,
+      new Promise<T>((_, reject) => 
+        setTimeout(() => reject(new Error('Discovery timeout')), timeoutMs)
+      )
+    ]);
+  }
+
+  private deduplicateResults(results: DiscoveryResult[]): DiscoveryResult[] {
+    // Simple deduplication based on file paths and documentation paths
+    const seenFiles = new Set<string>();
+    const seenDocs = new Set<string>();
+    const seenPatterns = new Set<string>();
+    
+    const deduplicated: DiscoveryResult[] = [];
+    
+    for (const result of results) {
+      const uniqueFiles = result.files.filter(f => !seenFiles.has(f.path));
+      const uniqueDocs = result.documentation.filter(d => !seenDocs.has(d.path));
+      const uniquePatterns = result.patterns.filter(p => !seenPatterns.has(p.pattern));
+      
+      // Add to seen sets
+      uniqueFiles.forEach(f => seenFiles.add(f.path));
+      uniqueDocs.forEach(d => seenDocs.add(d.path));
+      uniquePatterns.forEach(p => seenPatterns.add(p.pattern));
+      
+      if (uniqueFiles.length > 0 || uniqueDocs.length > 0 || uniquePatterns.length > 0) {
+        deduplicated.push({
+          ...result,
+          files: uniqueFiles,
+          documentation: uniqueDocs,
+          patterns: uniquePatterns
+        });
+      }
+    }
+    
+    return deduplicated;
+  }
+}
