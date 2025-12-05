@@ -546,4 +546,110 @@ export class ExecutorCLI {
       process.exit(1);
     }
   }
+
+  private async executeResearchCommand(
+    query: string,
+    options: any
+  ): Promise<void> {
+    try {
+      console.log(`🔍 Starting research: ${query || '(interactive mode)'}`);
+      
+      // Parse scope and depth from options
+      const scope = options.scope === 'codebase' ? ResearchScope.CODEBASE :
+                   options.scope === 'documentation' ? ResearchScope.DOCUMENTATION :
+                   options.scope === 'external' ? ResearchScope.EXTERNAL :
+                   ResearchScope.ALL;
+      
+      const depth = options.depth === 'shallow' ? ResearchDepth.SHALLOW :
+                   options.depth === 'medium' ? ResearchDepth.MEDIUM :
+                   options.depth === 'deep' ? ResearchDepth.DEEP :
+                   ResearchDepth.MEDIUM;
+
+      const researchQuery: ResearchQuery = {
+        id: `research-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+        query,
+        scope,
+        depth,
+        constraints: {
+          maxFiles: options.maxFiles || 100,
+          maxDuration: options.maxDuration || 300000, // 5 minutes
+          excludePatterns: options.exclude || []
+        },
+        context: {
+          verbose: options.verbose || false,
+          cacheEnabled: options.cache !== false
+        }
+      };
+
+      const config: ResearchConfig = {
+        maxConcurrency: 3,
+        defaultTimeout: 30000,
+        enableCaching: options.cache !== false,
+        logLevel: options.verbose ? 'debug' : 'info',
+        outputFormat: options.format || 'markdown',
+        outputPath: options.output || ''
+      };
+
+      const orchestrator = new ResearchOrchestrator(config);
+      
+      // Set up progress tracking
+      orchestrator.on('progress', (progress: ResearchProgress) => {
+        const percentage = (progress.completedSteps / progress.totalSteps * 100).toFixed(1);
+        console.log(`📊 Progress: ${progress.currentPhase} - ${percentage}% (${progress.completedSteps}/${progress.totalSteps})`);
+      });
+
+      orchestrator.on('error', (error: ResearchError) => {
+        console.error(`❌ Research error in ${error.phase}: ${error.error}`);
+      });
+
+      // Execute research
+      const result = await orchestrator.research(researchQuery);
+      
+      // Display results
+      console.log('\n🎯 Research Results');
+      console.log('==================');
+      console.log(`📋 Query: ${result.query.query}`);
+      console.log(`🔍 Scope: ${result.query.scope}`);
+      console.log(`⚡ Depth: ${result.query.depth}`);
+      console.log(`⏱️  Duration: ${result.metrics.totalDuration}ms`);
+      
+      if (result.findings.length > 0) {
+        console.log(`\n🔍 Key Findings (${result.findings.length}):`);
+        result.findings.forEach((finding, i) => {
+          console.log(`  ${i + 1}. ${finding.title} (${finding.impact})`);
+          if (finding.evidence && finding.evidence.length > 0) {
+            console.log(`     Evidence: ${finding.evidence.length} sources`);
+          }
+        });
+      }
+
+      if (result.recommendations.length > 0) {
+        console.log(`\n💡 Recommendations (${result.recommendations.length}):`);
+        result.recommendations.forEach((rec, i) => {
+          console.log(`  ${i + 1}. ${rec}`);
+        });
+      }
+
+      if (result.risks.length > 0) {
+        console.log(`\n⚠️  Risks Identified (${result.risks.length}):`);
+        result.risks.forEach((risk, i) => {
+          console.log(`  ${i + 1}. ${risk.description} (${risk.severity})`);
+        });
+      }
+
+      // Save results if requested
+      if (options.output) {
+        const content = options.format === 'json' ? 
+          JSON.stringify(result, null, 2) : 
+          result.summary;
+        
+        require('fs').writeFileSync(options.output, content);
+        console.log(`\n📄 Results saved to: ${options.output}`);
+      }
+
+    } catch (error) {
+      console.error(`❌ Research failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      process.exit(1);
+    }
+  }
 }

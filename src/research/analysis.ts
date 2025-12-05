@@ -265,7 +265,7 @@ export class CodebaseAnalyzer implements AnalysisAgent {
     
     if (importSources.external > importSources.internal * 2) {
       insights.push({
-        id: `insight-external-deps-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+        id: `insight-external-deps-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`,
         type: 'decision',
         title: 'High external dependency usage',
         description: `Codebase relies heavily on external dependencies (${importSources.external} vs ${importSources.internal} internal)`,
@@ -544,7 +544,7 @@ export class ResearchAnalyzer implements AnalysisAgent {
       // Assess documentation quality
       if (headings.length === 0 && items.length > 5) {
         insights.push({
-          id: `insight-doc-structure-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+          id: `insight-doc-structure-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`,
           type: 'finding',
           title: `Poor documentation structure in ${file}`,
           description: `Document lacks proper headings despite having ${items.length} elements`,
@@ -557,7 +557,7 @@ export class ResearchAnalyzer implements AnalysisAgent {
       
       if (codeBlocks.length > 0 && headings.length === 0) {
         insights.push({
-          id: `insight-code-explanation-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+          id: `insight-code-explanation-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`,
           type: 'finding',
           title: `Code without explanation in ${file}`,
           description: `Document contains ${codeBlocks.length} code blocks but lacks explanatory headings`,
@@ -584,7 +584,7 @@ export class ResearchAnalyzer implements AnalysisAgent {
     
     if (highFrequencyPatterns.length > 0) {
       insights.push({
-        id: `insight-high-freq-patterns-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+        id: `insight-high-freq-patterns-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`,
         type: 'pattern',
         title: 'High-frequency patterns detected',
         description: `Found ${highFrequencyPatterns.length} patterns that occur more than 5 times`,
@@ -607,7 +607,7 @@ export class ResearchAnalyzer implements AnalysisAgent {
     // Check if documentation matches code patterns
     if (patternEvidence.length > docEvidence.length * 2) {
       insights.push({
-        id: `insight-doc-coverage-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+        id: `insight-doc-coverage-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`,
         type: 'finding',
         title: 'Insufficient documentation coverage',
         description: `Found ${patternEvidence.length} patterns but only ${docEvidence.length} documentation elements`,

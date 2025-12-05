@@ -78,7 +78,9 @@ export class PlanParser {
     return {
       metadata,
       tasks,
-      qualityGates
+      qualityGates,
+      errors: this.errors,
+      warnings: this.warnings
     };
   }
 

@@ -375,6 +375,6 @@ export class ResearchOrchestrator extends EventEmitter {
    * Generate unique ID
    */
   private generateId(): string {
-    return `research-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    return `research-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
   }
 }
